@@ -1,6 +1,72 @@
-<div class="bg"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
 
-<div class="star-field">
-<div class="layer"></div>
-<div class="layer"></div>
-<div class="layer"></div>
+        canvas {
+            display: block;
+        }
+    </style>
+    <title>Galaxy Background</title>
+</head>
+<body>
+    <canvas id="galaxy"></canvas>
+
+    <script>
+        const canvas = document.getElementById('galaxy');
+        const ctx = canvas.getContext('2d');
+
+        let stars = [];
+
+        function initializeStars() {
+            for (let i = 0; i < 200; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 2,
+                    color: 'white'
+                });
+            }
+        }
+
+        function drawStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < stars.length; i++) {
+                const star = stars[i];
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = star.color;
+                ctx.fill();
+            }
+        }
+
+        function updateStars() {
+            for (let i = 0; i < stars.length; i++) {
+                stars[i].y += 0.2;
+                if (stars[i].y > canvas.height) {
+                    stars[i].y = 0;
+                }
+            }
+        }
+
+        function animate() {
+            drawStars();
+            updateStars();
+            requestAnimationFrame(animate);
+        }
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        initializeStars();
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+         
