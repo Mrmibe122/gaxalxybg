@@ -61,6 +61,7 @@
             requestAnimationFrame(animate);
         }
 
+        // Set initial canvas dimensions
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
@@ -68,5 +69,11 @@
         animate();
 
         window.addEventListener('resize', () => {
+            // Update canvas dimensions on window resize
             canvas.width = window.innerWidth;
-         
+            canvas.height = window.innerHeight;
+            initializeStars();
+        });
+    </script>
+</body>
+</html>
